@@ -86,10 +86,9 @@ int	check_valid_chars(char *line)
 	while (line[i])
 	{
 		if (!(line[i] == 'P' || line[i] == 'E' || line[i] == '1'
-			|| line[i] == '0' || line[i] == 'C'))
+				|| line[i] == '0' || line[i] == 'C'))
 			return (0);
 		i++;
 	}
 	return (1);
 }
-

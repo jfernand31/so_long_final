@@ -13,6 +13,18 @@
 #include "../includes/game.h"
 #include "../includes/map.h"
 
+int	has_ber_extension(char *filename)
+{
+	int	len;
+
+	if (!filename)
+		return (0);
+	len = ft_strlen(filename);
+	if (len < 4)
+		return (0);
+	return (ft_strncmp(filename + len - 4, ".ber", 4) == 0);
+}
+
 void	init_game(t_game *game)
 {
 	game->mlx = NULL;

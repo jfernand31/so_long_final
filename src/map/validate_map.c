@@ -11,6 +11,45 @@
 /* ************************************************************************** */
 
 #include "../../includes/map.h"
+#include <stdlib.h>
+
+void	flood_fill(char **grid, int x, int y)
+{
+	if (grid[y][x] == '1' || grid[y][x] == 'V')
+		return ;
+	grid[y][x] = 'V';
+	flood_fill(grid, x + 1, y);
+	flood_fill(grid, x - 1, y);
+	flood_fill(grid, x, y + 1);
+	flood_fill(grid, x, y - 1);
+}
+
+int	check_path(char **grid, t_game *game)
+{
+	char	**temp;
+	int		i;
+	int		j;
+
+	temp = malloc(sizeof(char *) * (game->height + 1));
+	if (!temp)
+		return (0);
+	temp = copy_grid(grid,game->height);
+	if (!temp)
+		return (0);
+	flood_fill(temp, game->player_x, game->player_y);
+	i = -1;
+	while (++i < game->height)
+	{
+		j = -1;
+		while (temp[++j])
+		{
+			if (temp[i][j] != '1' && temp[i][j] != 'V' && temp[i][j] != '0')
+				return (0);
+		}
+	}
+	free_grid(temp, game->height);
+	return (1);
+}
 
 static int	check_map_format(char **grid, t_game *game)
 {
@@ -40,7 +79,6 @@ static int	check_map_format(char **grid, t_game *game)
 static int	is_map_valid(t_game *game, const char *path)
 {
 	int		fd;
-	int		valid;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
@@ -50,11 +88,14 @@ static int	is_map_valid(t_game *game, const char *path)
 	fd = open(path, O_RDONLY);
 	parse_grid(fd, game);
 	close(fd);
-	if(!game->grid)
+	if (!game->grid)
 		return (0);
-	valid = check_map_format(game->grid, game);
-	return (valid);
-}	
+	if (!check_map_format(game->grid, game))
+		return (0);
+	if (!check_path(game->grid, game))
+		return (0);
+	return (1);
+}
 
 int	validate_map(t_game *game, char **argv)
 {
@@ -66,14 +107,17 @@ int	validate_map(t_game *game, char **argv)
 	i = -1;
 	while (++i < game->total_levels)
 	{
-		if (is_map_valid(game, argv[i + 1]))
-			game->level_paths[i] = ft_strdup(argv[i + 1]);
-		else
+		if (!has_ber_extension(argv[i + 1]))
+		{
+			ft_printf("Error: map file %s does not have .ber extension\n", argv[i + 1]);
+			return (0);
+		}
+		if (!is_map_valid(game, argv[i + 1]))
 		{
 			ft_printf("Error: invalid map %s\n", argv[i + 1]);
 			return (0);
 		}
+		game->level_paths[i] = ft_strdup(argv[i + 1]);
 	}
 	return (1);
 }
-

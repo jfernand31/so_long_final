@@ -14,13 +14,13 @@
 
 int	ft_strlen_nobrk(const char *s)
 {
-	int	len = 0;
+	int	len;
 
+	len = 0;
 	while (s[len] && s[len] != '\n')
 		len++;
 	return (len);
 }
-
 
 int	check_collectibles(char *line)
 {
@@ -41,7 +41,7 @@ int	check_collectibles(char *line)
 int	check_shape(char **grid, t_game *game)
 {
 	int	len;
-	int curr_len;
+	int	curr_len;
 	int	y;
 
 	if (!grid || !grid[0])
@@ -59,3 +59,24 @@ int	check_shape(char **grid, t_game *game)
 	return (1);
 }
 
+char	**copy_grid(char **grid, int height)
+{
+	char	**copy;
+	int		i;
+
+	copy = malloc(sizeof(char *) * (height + 1));
+	if (!copy)
+		return (NULL);
+	i = -1;
+	while (++i < height)
+	{
+		copy[i] = ft_strdup(grid[i]);
+		if (!copy[i])
+		{
+			free_grid(copy, height);
+			return (NULL);
+		}
+	}
+	copy[height] = NULL;
+	return (copy);
+}

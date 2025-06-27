@@ -12,31 +12,33 @@
 
 #include "../../includes/map.h"
 
-int get_height(int fd)
+int	get_height(int fd)
 {
-	int		height = 0;
+	int		height;
 	char	*line;
 
-	while ((line = get_next_line(fd)))
+	height = 0;
+	line = get_next_line(fd);
+	while (line)
 	{
 		height++;
 		free(line);
+		line = get_next_line(fd);
 	}
 	return (height);
 }
 
-void remove_newline(char *str)
+void	remove_newline(char *str)
 {
-    int len = 0;
+	int	len;
 
-    if (!str)
-        return;
-
-    while (str[len])
-        len++;
-
-    if (len > 0 && str[len - 1] == '\n')
-        str[len - 1] = '\0';
+	len = 0;
+	if (!str)
+		return ;
+	while (str[len])
+		len++;
+	if (len > 0 && str[len - 1] == '\n')
+		str[len - 1] = '\0';
 }
 
 void	parse_grid(int fd, t_game *game)
@@ -59,4 +61,3 @@ void	parse_grid(int fd, t_game *game)
 	}
 	game->grid[i] = NULL;
 }
-
