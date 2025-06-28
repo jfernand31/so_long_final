@@ -40,7 +40,7 @@ void	init_game(t_game *game)
 	game->level_paths = NULL;
 	game->current_level = 0;
 	game->total_levels = 0;
-	game->tile_size = 32;
+	game->tile_size = 64;
 }
 
 int	main(int argc, char **argv)

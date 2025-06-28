@@ -41,7 +41,7 @@ int	load_textures(t_game *game)
 			"assets/sprites/items.xpm", &width, &height);
 	game->textures.exit = mlx_xpm_file_to_image(game->mlx,
 			"assets/textures/exit.xpm", &width, &height);
-	if (!game->textures.wall || !game->textures.floor) || !game->textures.player || !game->textures.items || !game->textures.exit)
+	if (!game->textures.wall || !game->textures.floor || !game->textures.player || !game->textures.items || !game->textures.exit)
 	{
 		free_textures(game);
 		return (0);
