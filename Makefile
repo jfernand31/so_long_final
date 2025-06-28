@@ -21,7 +21,9 @@ CFILES= ./src/main.c \
 		./src/map/map_utils.c \
 		./src/map/map_more_utils.c \
 		./src/game/game.c \
-		./src/render/render_map.c
+		./src/render/render_map.c \
+		./src/game/events.c
+
 # .h files
 HFILES= ./includes/game.h \
 		./includes/ map.h \

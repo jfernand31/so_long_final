@@ -53,24 +53,24 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 {
 	if (tile == '1')
 		mlx_put_image_to_window(game->mlx, game->win,
-			game->textures.wall, x * game->tile_size,
-			y * game->tile_size);
+			game->textures.wall,  x * game->tile_size,
+			 y * game->tile_size);
 	else if (tile == '0')
 		mlx_put_image_to_window(game->mlx, game->win,
-			game->textures.floor, x * game->tile_size,
-			y * game->tile_size);
+			game->textures.floor,  x * game->tile_size,
+			 y * game->tile_size);
 	else if (tile == 'P')
 		mlx_put_image_to_window(game->mlx, game->win,
-			game->textures.player, x * game->tile_size,
-			y * game->tile_size);
+			game->textures.player,  x * game->tile_size,
+			 y * game->tile_size);
 	else if (tile == 'C')
 		mlx_put_image_to_window(game->mlx, game->win,
-			game->textures.items, x * game->tile_size,
-			y * game->tile_size);
+			game->textures.items,  x * game->tile_size,
+			 y * game->tile_size);
 	else if (tile == 'E')
 		mlx_put_image_to_window(game->mlx, game->win,
-			game->textures.exit, x * game->tile_size,
-			y * game->tile_size);
+			game->textures.exit,  x * game->tile_size,
+			 y * game->tile_size);
 }
 
 void	draw_map(t_game *game)
@@ -79,6 +79,7 @@ void	draw_map(t_game *game)
 	int		y;
 	char	tile;
 
+	mlx_clear_window(game->mlx, game->win);
 	y = -1;
 	while (++y < game->height)
 	{

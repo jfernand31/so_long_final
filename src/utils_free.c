@@ -20,8 +20,25 @@ void	free_grid(char **grid, int height)
 		return ;
 	i = -1;
 	while (++i < height)
-		free(grid[i]);
+	{
+		if (grid[i])
+			free(grid[i]);
+	}
 	free(grid);
+}
+
+void	free_str_array(char **arr, int count)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	for (i = 0; i < count; i++)
+	{
+		if (arr[i])
+			free(arr[i]);
+	}
+	free(arr);
 }
 
 void	free_game(t_game *game)
@@ -29,6 +46,6 @@ void	free_game(t_game *game)
 	if (!game)
 		return ;
 	free_grid(game->grid, game->height);
-	free_grid(game->level_paths, game->total_levels);
+	free_str_array(game->level_paths, game->total_levels);
 	free(game);
 }

@@ -18,6 +18,9 @@
 # include <fcntl.h>
 # include <X11/X.h>
 
+# define WINDOW_WIDTH  1024
+# define WINDOW_HEIGHT 768
+
 typedef struct s_textures
 {
 	void	*wall;
@@ -25,19 +28,12 @@ typedef struct s_textures
 	void	*player;
 	void	*exit;
 	void	*items;
-}	t_textures;
-
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;
+}			t_textures;
 
 typedef struct s_game
 {
+	int			x_offset;
+	int			y_offset;
 	void		*mlx;
 	void		*win;
 	char		**grid;
@@ -55,12 +51,13 @@ typedef struct s_game
 	t_textures	textures;
 }				t_game;
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	handle_exit_event(t_game *game);
 int		has_ber_extension(char *filename);
 void	free_grid(char **grid, int height);
 void	free_game(t_game *game);
 int		run_game(t_game *game);
 int		load_textures(t_game *game);
 void	draw_map(t_game *game);
+int		close_win(t_game *game);
 
 #endif

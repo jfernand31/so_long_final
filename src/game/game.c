@@ -11,25 +11,68 @@
 /* ************************************************************************** */
 
 #include "../../includes/game.h"
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-int	create_trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
+#include "../../includes/map.h"
 
 int	close_win(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->win);
 	exit(0);
 	return (0);
+}
+
+/*void	center_map(t_game *game, int window_width, int window_height)
+{
+	int	map_width_px = game->width * game->tile_size;
+	int	map_height_px = game->height * game->tile_size;
+
+	game->x_offset = (window_width - map_width_px) / 2;
+	game->y_offset = (window_height - map_height_px) / 2;
+
+	if (game->x_offset < 0)
+		game->x_offset = 0;
+	if (game->y_offset < 0)
+		game->y_offset = 0;
+}*/
+
+int	handle_exit(t_game *game)
+{
+	if (game->collected == game->items)
+		handle_exit_event(game);
+	return (0);
+}
+
+void	update_tile(t_game *game, int y, int x)
+{
+	game->grid[game->player_y][game->player_x] = '0';
+	game->grid[y][x] = 'P';
+	game->player_y = y;
+	game->player_x = x;
+}
+
+int	move_player(t_game *game, int keycode)
+{
+	int	p_y;
+	int	p_x;
+
+	p_y = game->player_y;
+	p_x = game->player_x;
+	if (keycode == 119)
+		p_y -= 1;
+	else if (keycode == 115)
+		p_y += 1;
+	else if (keycode == 97)
+		p_x -= 1;
+	else if (keycode == 100)
+		p_x += 1;
+	if (game->grid[p_y][p_x] == '1')
+		return (0);
+	if (game->grid[p_y][p_x] == 'C')
+		game->collected += 1;
+	if (game->grid[p_y][p_x] == 'E')
+		if (!handle_exit(game))
+				return (0);
+	update_tile(game, p_y, p_x);
+	return (1);
 }
 
 int	key_press(int keycode, t_game *game)
@@ -40,13 +83,14 @@ int	key_press(int keycode, t_game *game)
 		close_win(game);
 		exit(0);
 	}
+	if (keycode == 119 || keycode == 97 || keycode == 115 || keycode == 100)
+		if (move_player(game, keycode))
+			draw_map(game);
 	return (0);
 }
 
 int	run_game(t_game *game)
-{
-	//t_data	img;
-	
+{	
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return (0);
@@ -55,16 +99,13 @@ int	run_game(t_game *game)
 		ft_printf("Failed to load textures\n");
 		return (0);
 	}
-	game->win = mlx_new_window(game->mlx, (game->width * game->tile_size),
-			(game->height * game->tile_size),
-			game->level_paths[game->current_level]);
-	/*img.img = mlx_new_image(game->mlx, (game->width * game->tile_size),
-			(game->height * game->tile_size));
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-			&img.line_length, &img.endian);*/
+	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
+			"So Long");
+//	center_map(game,WINDOW_WIDTH, WINDOW_HEIGHT);
+	game->items = 0;
+	is_map_valid(game, game->level_paths[game->current_level]);
 	draw_map(game);
 	mlx_key_hook(game->win, key_press, game);
-	//mlx_put_image_to_window(game->mlx, game->win, img.img, 0, 0);
 	mlx_hook(game->win, 17, 0, close_win, game);
 	mlx_loop(game->mlx);
 	return (1);

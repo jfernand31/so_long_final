@@ -30,9 +30,6 @@ int	check_path(char **grid, t_game *game)
 	int		i;
 	int		j;
 
-	temp = malloc(sizeof(char *) * (game->height + 1));
-	if (!temp)
-		return (0);
 	temp = copy_grid(grid,game->height);
 	if (!temp)
 		return (0);
@@ -41,10 +38,13 @@ int	check_path(char **grid, t_game *game)
 	while (++i < game->height)
 	{
 		j = -1;
-		while (temp[++j])
+		while (temp[i][++j])
 		{
 			if (temp[i][j] != '1' && temp[i][j] != 'V' && temp[i][j] != '0')
+			{
+				free_grid(temp, game->height);
 				return (0);
+			}
 		}
 	}
 	free_grid(temp, game->height);
@@ -76,7 +76,7 @@ static int	check_map_format(char **grid, t_game *game)
 	return (1);
 }
 
-static int	is_map_valid(t_game *game, const char *path)
+int	is_map_valid(t_game *game, const char *path)
 {
 	int		fd;
 
@@ -104,6 +104,8 @@ int	validate_map(t_game *game, char **argv)
 	if (!game)
 		return (0);
 	game->level_paths = malloc(sizeof(char *) * game->total_levels);
+	if (!game->level_paths)
+		return (0);
 	i = -1;
 	while (++i < game->total_levels)
 	{

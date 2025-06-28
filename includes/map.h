@@ -25,5 +25,6 @@ int		check_valid_chars(char *line);
 int		check_collectibles(char *line);
 int		check_shape(char **grid, t_game *game);
 char	**copy_grid(char **grid, int height);
+int		is_map_valid(t_game *game, const char *path);
 
 #endif

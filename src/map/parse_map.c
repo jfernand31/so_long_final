@@ -51,13 +51,19 @@ void	parse_grid(int fd, t_game *game)
 	if (!game->grid)
 		return ;
 	while (++i < game->height)
+		game->grid[i] = NULL;
+	i = -1;
+	while (++i < game->height)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
 		remove_newline(line);
 		game->grid[i] = ft_strdup(line);
+		if (!game->grid[i])
+			break;
 		free(line);
+		ft_printf("DEBUG: line %d: %s\n", i, game->grid[i]);
 	}
 	game->grid[i] = NULL;
 }

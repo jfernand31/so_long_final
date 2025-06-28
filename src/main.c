@@ -62,6 +62,13 @@ int	main(int argc, char **argv)
 		free_game(game);
 		return (1);
 	}
+	for (int i = 0; i < game->total_levels; i++)
+	{
+    	if (game->level_paths[i])
+        	ft_printf("Level path %d: %s\n", i, game->level_paths[i]);
+    	else
+    	    ft_printf("Level path %d: NULL\n", i);
+	}
 	run_game(game);
 	free_game(game);
 	return (0);
