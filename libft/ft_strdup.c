@@ -6,7 +6,7 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:53:37 by jfernand          #+#    #+#             */
-/*   Updated: 2025/04/08 19:21:07 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/28 21:53:59 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strdup(const char *s)
 	size_t	i;
 	char	*ptr;
 
-	ptr = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	ptr = (char *)ft_calloc((ft_strlen(s) + 1), sizeof(char));
 	if (ptr == NULL)
 	{
 		return (NULL);

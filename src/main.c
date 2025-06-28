@@ -6,7 +6,7 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 08:56:05 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/27 11:17:23 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/28 21:57:28 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	init_game(t_game *game)
 	game->current_level = 0;
 	game->total_levels = 0;
 	game->tile_size = 64;
+	game->x_offset = 0;
+	game->y_offset = 0;
 }
 
 int	main(int argc, char **argv)
@@ -61,13 +63,6 @@ int	main(int argc, char **argv)
 	{
 		free_game(game);
 		return (1);
-	}
-	for (int i = 0; i < game->total_levels; i++)
-	{
-    	if (game->level_paths[i])
-        	ft_printf("Level path %d: %s\n", i, game->level_paths[i]);
-    	else
-    	    ft_printf("Level path %d: NULL\n", i);
 	}
 	run_game(game);
 	free_game(game);

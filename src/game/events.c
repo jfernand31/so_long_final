@@ -15,7 +15,6 @@
 
 void	load_new_level(t_game *game)
 {
-	free_grid(game->grid, game->height);
 	game->collected = 0;
 	game->items = 0;
 	if (!is_map_valid(game, game->level_paths[game->current_level]))
@@ -24,6 +23,7 @@ void	load_new_level(t_game *game)
     	close_win(game);
     	exit(1);
 	}
+	center_map(game);
 	ft_printf("Loaded level %d\n", game->current_level + 1);
 	return ;
 }

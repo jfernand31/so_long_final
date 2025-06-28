@@ -63,7 +63,6 @@ void	parse_grid(int fd, t_game *game)
 		if (!game->grid[i])
 			break;
 		free(line);
-		ft_printf("DEBUG: line %d: %s\n", i, game->grid[i]);
 	}
 	game->grid[i] = NULL;
 }

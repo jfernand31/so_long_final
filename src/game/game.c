@@ -20,20 +20,6 @@ int	close_win(t_game *game)
 	return (0);
 }
 
-/*void	center_map(t_game *game, int window_width, int window_height)
-{
-	int	map_width_px = game->width * game->tile_size;
-	int	map_height_px = game->height * game->tile_size;
-
-	game->x_offset = (window_width - map_width_px) / 2;
-	game->y_offset = (window_height - map_height_px) / 2;
-
-	if (game->x_offset < 0)
-		game->x_offset = 0;
-	if (game->y_offset < 0)
-		game->y_offset = 0;
-}*/
-
 int	handle_exit(t_game *game)
 {
 	if (game->collected == game->items)
@@ -77,7 +63,6 @@ int	move_player(t_game *game, int keycode)
 
 int	key_press(int keycode, t_game *game)
 {
-	ft_printf("Key pressed: %d\n", keycode);
 	if (keycode == 65307)
 	{
 		close_win(game);
@@ -101,9 +86,10 @@ int	run_game(t_game *game)
 	}
 	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 			"So Long");
-//	center_map(game,WINDOW_WIDTH, WINDOW_HEIGHT);
 	game->items = 0;
-	is_map_valid(game, game->level_paths[game->current_level]);
+	if (!is_map_valid(game, game->level_paths[game->current_level]))
+			return (0);
+	center_map(game);
 	draw_map(game);
 	mlx_key_hook(game->win, key_press, game);
 	mlx_hook(game->win, 17, 0, close_win, game);

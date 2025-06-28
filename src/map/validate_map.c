@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/map.h"
-#include <stdlib.h>
 
 void	flood_fill(char **grid, int x, int y)
 {
@@ -30,7 +29,7 @@ int	check_path(char **grid, t_game *game)
 	int		i;
 	int		j;
 
-	temp = copy_grid(grid,game->height);
+	temp = copy_grid(grid, game->height);
 	if (!temp)
 		return (0);
 	flood_fill(temp, game->player_x, game->player_y);
@@ -79,7 +78,9 @@ static int	check_map_format(char **grid, t_game *game)
 int	is_map_valid(t_game *game, const char *path)
 {
 	int		fd;
-
+	
+	if (game->grid)
+		free_grid(game->grid, game->height);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
@@ -91,9 +92,15 @@ int	is_map_valid(t_game *game, const char *path)
 	if (!game->grid)
 		return (0);
 	if (!check_map_format(game->grid, game))
+	{
+		free_grid(game->grid, game->height);
 		return (0);
+	}
 	if (!check_path(game->grid, game))
+	{
+		free_grid(game->grid, game->height);
 		return (0);
+	}
 	return (1);
 }
 
@@ -103,7 +110,7 @@ int	validate_map(t_game *game, char **argv)
 
 	if (!game)
 		return (0);
-	game->level_paths = malloc(sizeof(char *) * game->total_levels);
+	game->level_paths = ft_calloc(game->total_levels, sizeof *game->level_paths);
 	if (!game->level_paths)
 		return (0);
 	i = -1;
@@ -111,12 +118,14 @@ int	validate_map(t_game *game, char **argv)
 	{
 		if (!has_ber_extension(argv[i + 1]))
 		{
-			ft_printf("Error: map file %s does not have .ber extension\n", argv[i + 1]);
+			ft_printf("Error: map %s needs to have .ber extension\n");
+			free_game(game);
 			return (0);
 		}
 		if (!is_map_valid(game, argv[i + 1]))
 		{
 			ft_printf("Error: invalid map %s\n", argv[i + 1]);
+			free_game(game);
 			return (0);
 		}
 		game->level_paths[i] = ft_strdup(argv[i + 1]);

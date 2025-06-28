@@ -18,8 +18,8 @@
 # include <fcntl.h>
 # include <X11/X.h>
 
-# define WINDOW_WIDTH  1024
-# define WINDOW_HEIGHT 768
+# define WINDOW_WIDTH  1920
+# define WINDOW_HEIGHT 1080
 
 typedef struct s_textures
 {
@@ -59,5 +59,6 @@ int		run_game(t_game *game);
 int		load_textures(t_game *game);
 void	draw_map(t_game *game);
 int		close_win(t_game *game);
+void	center_map(t_game *game);
 
 #endif
