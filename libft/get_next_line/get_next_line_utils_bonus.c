@@ -6,19 +6,19 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:12:53 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/27 12:09:08 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/29 14:33:08 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_joinstr(char const *s1, char const *s2);
 char	*ft_strduplicate(const char *s);
-char	*ft_strchr(const char *s, int c);
+char	*ft_strchar(const char *s, int c);
 size_t	ft_strlength(const char *str);
-char	*ft_substr(char *s, unsigned int start, size_t len);
+char	*ft_get_substr(char *s, unsigned int start, size_t len);
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_get_substr(char *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*str;
@@ -57,7 +57,7 @@ size_t	ft_strlength(const char *str)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchar(const char *s, int c)
 {
 	int		i;
 
@@ -75,7 +75,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_joinstr(char const *s1, char const *s2)
 {
 	size_t	i;
 	size_t	j;

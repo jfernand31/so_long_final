@@ -11,6 +11,20 @@
 /* ************************************************************************** */
 
 #include "../../includes/game.h"
+#include <stdio.h>
+
+void	draw_player(t_game *game, int y, int x)
+{
+	int		frame;
+	void	*sprite;
+
+	frame = game->frame_index;
+	sprite = game->textures.player[game->dir][frame];
+		if (!sprite)
+		return ;
+	mlx_put_image_to_window(game->mlx, game->win, sprite, x, y);
+}
+
 
 void	center_map(t_game *game)
 {
@@ -26,50 +40,39 @@ void	center_map(t_game *game)
         game->y_offset = 0;
 }
 
-static void	free_textures(t_game *game)
+void	free_textures(t_game *game)
 {
+	int	i;
+	int	j;
+
 	if (game->textures.wall)
 		mlx_destroy_image(game->mlx, game->textures.wall);
 	if (game->textures.floor)
 		mlx_destroy_image(game->mlx, game->textures.floor);
-	if (game->textures.player)
-		mlx_destroy_image(game->mlx, game->textures.player);
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 2)
+		{
+			if (game->textures.player[i][j])
+				mlx_destroy_image(game->mlx, game->textures.player[i][j]);
+		}
+	}
 	if (game->textures.items)
 		mlx_destroy_image(game->mlx, game->textures.items);
 	if (game->textures.exit)
 		mlx_destroy_image(game->mlx, game->textures.exit);
 }
 
-int	load_textures(t_game *game)
-{
-	int	width;
-	int	height;
-
-	game->textures.wall = mlx_xpm_file_to_image(game->mlx,
-			"assets/textures/wall.xpm", &width, &height);
-	game->textures.floor = mlx_xpm_file_to_image(game->mlx,
-			"assets/textures/floor.xpm", &width, &height);
-	game->textures.player = mlx_xpm_file_to_image(game->mlx,
-			"assets/sprites/player.xpm", &width, &height);
-	game->textures.items = mlx_xpm_file_to_image(game->mlx,
-			"assets/sprites/items.xpm", &width, &height);
-	game->textures.exit = mlx_xpm_file_to_image(game->mlx,
-			"assets/textures/exit.xpm", &width, &height);
-	if (!game->textures.wall || !game->textures.floor
-			|| !game->textures.player || !game->textures.items
-			|| !game->textures.exit)
-	{
-		free_textures(game);
-		return (0);
-	}
-	return (1);
-}
 
 void draw_tile(t_game *game, char tile, int x, int y)
 {
-    int px = game->x_offset + x * game->tile_size;
-    int py = game->y_offset + y * game->tile_size;
+	int 	px;
+	int 	py;
 
+    px = game->x_offset + x * game->tile_size;
+    py = game->y_offset + y * game->tile_size;
     if (tile == '1')
         mlx_put_image_to_window(game->mlx, game->win,
             game->textures.wall, px, py);
@@ -77,8 +80,8 @@ void draw_tile(t_game *game, char tile, int x, int y)
         mlx_put_image_to_window(game->mlx, game->win,
             game->textures.floor, px, py);
     else if (tile == 'P')
-        mlx_put_image_to_window(game->mlx, game->win,
-            game->textures.player, px, py);
+		mlx_put_image_to_window(game->mlx, game->win,
+			game->textures.player[game->dir][game->frame_index], px, py);
     else if (tile == 'C')
         mlx_put_image_to_window(game->mlx, game->win,
             game->textures.items, px, py);
@@ -92,6 +95,7 @@ void	draw_map(t_game *game)
 	int		x;
 	int		y;
 	char	tile;
+	char	msg[32];
 
 	mlx_clear_window(game->mlx, game->win);
 	y = -1;
@@ -104,4 +108,6 @@ void	draw_map(t_game *game)
 			draw_tile(game, tile, x, y);
 		}
 	}
+	snprintf(msg, sizeof(msg), "Steps: %d", game->steps);
+	mlx_string_put(game->mlx, game->win, 10, 10, 0xFFFFFF, msg);
 }

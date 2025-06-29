@@ -59,6 +59,8 @@ static int	check_map_format(char **grid, t_game *game)
 	y = -1;
 	exits = 0;
 	player = 0;
+	if (game->items > 0)
+		game->items = 0;
 	while (grid[++y])
 	{
 		if (y == 0 || grid[y + 1] == NULL)

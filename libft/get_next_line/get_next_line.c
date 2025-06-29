@@ -6,7 +6,7 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:59:43 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/27 12:09:08 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/29 14:33:08 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ char	*read_and_store(int fd, char *leftover, char *buffer)
 		if (!leftover)
 			leftover = ft_strduplicate("");
 		tmp = leftover;
-		leftover = ft_strjoin(tmp, buffer);
+		leftover = ft_joinstr(tmp, buffer);
 		free(tmp);
-		if (ft_strchr(buffer, '\n'))
+		if (ft_strchar(buffer, '\n'))
 			break ;
 	}
 	return (leftover);
@@ -83,7 +83,7 @@ char	*update_leftover(char *line)
 		i++;
 	if (line[i] == '\0' || line[i + 1] == '\0')
 		return (NULL);
-	new_leftover = ft_substr(line, i + 1, ft_strlength(line) - (i + 1));
+	new_leftover = ft_get_substr(line, i + 1, ft_strlength(line) - (i + 1));
 	if (!new_leftover || *new_leftover == '\0')
 	{
 		free(new_leftover);
@@ -104,5 +104,5 @@ char	*extract_line(char *str)
 		i++;
 	if (str[i] == '\n')
 		i++;
-	return (ft_substr(str, 0, i));
+	return (ft_get_substr(str, 0, i));
 }

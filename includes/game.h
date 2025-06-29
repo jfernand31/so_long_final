@@ -17,39 +17,53 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <X11/X.h>
+# include <stdio.h>
 
 # define WINDOW_WIDTH  1920
 # define WINDOW_HEIGHT 1080
+# define FRAME_DELAY 200
+# define WALK_FRAMES 2
+
+typedef enum e_direction
+{
+	DIR_UP,
+	DIR_DOWN,
+	DIR_LEFT,
+	DIR_RIGHT,
+}	t_direction;
 
 typedef struct s_textures
 {
 	void	*wall;
 	void	*floor;
-	void	*player;
+	void	*player[4][WALK_FRAMES];
 	void	*exit;
 	void	*items;
 }			t_textures;
 
 typedef struct s_game
 {
-	int			x_offset;
-	int			y_offset;
-	void		*mlx;
-	void		*win;
-	char		**grid;
-	int			width;
-	int			height;
-	int			player_x;
-	int			player_y;
-	int			items;
-	int			collected;
-	int			steps;
-	char		**level_paths;
-	int			current_level;
-	int			total_levels;
-	int			tile_size;
-	t_textures	textures;
-}				t_game;
+	t_direction		dir;
+	int				x_offset;
+	int				y_offset;
+	void			*mlx;
+	void			*win;
+	char			**grid;
+	int				width;
+	int				height;
+	int				player_x;
+	int				player_y;
+	int				items;
+	int				collected;
+	int				steps;
+	char			**level_paths;
+	int				current_level;
+	int				total_levels;
+	int				tile_size;
+	t_textures		textures;
+	int				frame_index;
+	int				frame_counter;
+}					t_game;
 
 void	handle_exit_event(t_game *game);
 int		has_ber_extension(char *filename);
@@ -60,5 +74,11 @@ int		load_textures(t_game *game);
 void	draw_map(t_game *game);
 int		close_win(t_game *game);
 void	center_map(t_game *game);
+int		handle_exit(t_game *game);
+int		game_loop(t_game *game);
+void 	draw_player(t_game *game, int y, int x);
+int		load_textures(t_game *game);
+void	free_textures(t_game *game);
+void	update_animation(t_game *game);
 
 #endif

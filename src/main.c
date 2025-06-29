@@ -43,6 +43,8 @@ void	init_game(t_game *game)
 	game->tile_size = 64;
 	game->x_offset = 0;
 	game->y_offset = 0;
+	game->frame_counter = 0;
+	game->frame_index = 0;
 }
 
 int	main(int argc, char **argv)
