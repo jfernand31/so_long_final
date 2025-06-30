@@ -24,6 +24,7 @@
 # define FRAME_DELAY 200
 # define WALK_FRAMES 2
 # define MOVE_COOLDOWN_FRAMES 40
+# define ENEMY_FRAMES 2
 
 typedef enum e_direction
 {
@@ -38,12 +39,24 @@ typedef struct s_textures
 	void	*wall;
 	void	*floor;
 	void	*player[4][WALK_FRAMES];
+	void	*enemy[ENEMY_FRAMES];
 	void	*exit;
 	void	*items;
 }			t_textures;
 
+typedef struct s_enemy
+{
+	int	enemy_frame_index;
+	int	enemy_frame_counter;
+	int	enemy_x;
+	int	enemy_y;
+	int	move_cooldown;
+}	t_enemy;
+
 typedef struct s_game
 {
+	t_enemy			enemies;
+	int				enemy_count;
 	t_direction		dir;
 	int				x_offset;
 	int				y_offset;

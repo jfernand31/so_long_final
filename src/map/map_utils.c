@@ -78,7 +78,7 @@ int	check_exit(char *line)
 	return (exits);
 }
 
-int	check_valid_chars(char *line)
+int	check_valid_chars(char *line, int y, t_game *game)
 {
 	int	i;
 
@@ -86,8 +86,14 @@ int	check_valid_chars(char *line)
 	while (line[i])
 	{
 		if (!(line[i] == 'P' || line[i] == 'E' || line[i] == '1'
-				|| line[i] == '0' || line[i] == 'C'))
+				|| line[i] == '0' || line[i] == 'C' || line[i] == 'M'))
 			return (0);
+		if (line[i] == 'M')
+		{
+			game->enemies.enemy_x = i;
+			game->enemies.enemy_y = y;
+			game->enemy_count++;
+		}
 		i++;
 	}
 	return (1);

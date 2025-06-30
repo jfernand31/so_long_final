@@ -57,7 +57,7 @@ void	parse_grid(int fd, t_game *game)
 		remove_newline(line);
 		game->grid[i] = ft_strdup(line);
 		if (!game->grid[i])
-			break;
+			break ;
 		free(line);
 	}
 	game->grid[i] = NULL;

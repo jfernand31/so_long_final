@@ -21,7 +21,7 @@ int		check_outer_wall(char *line);
 int		check_borders(char *line);
 int		check_player(char *line, int y, t_game *game);
 int		check_exit(char *line);
-int		check_valid_chars(char *line);
+int		check_valid_chars(char *line, int y, t_game *game);
 int		check_collectibles(char *line);
 int		check_shape(char **grid, t_game *game);
 char	**copy_grid(char **grid, int height);

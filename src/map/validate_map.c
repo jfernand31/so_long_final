@@ -69,7 +69,7 @@ static int	check_map_format(char **grid, t_game *game)
 		exits += check_exit(grid[y]);
 		player += check_player(grid[y], y, game);
 		game->items += check_collectibles(grid[y]);
-		if (!check_valid_chars(grid[y]) || !check_borders(grid[y]))
+		if (!check_valid_chars(grid[y], y, game) || !check_borders(grid[y]))
 			return (0);
 	}
 	if (player != 1 || exits < 1 || game->items < 1 || !check_shape(grid, game))
@@ -80,10 +80,10 @@ static int	check_map_format(char **grid, t_game *game)
 int	is_map_valid(t_game *game, const char *path)
 {
 	int		fd;
-	
+
 	if (game->grid)
 		free_grid(game->grid, game->height);
-	game->grid  = NULL;
+	game->grid = NULL;
 	game->height = get_height(path);
 	fd = open(path, O_RDONLY);
 	parse_grid(fd, game);
@@ -103,7 +103,8 @@ int	validate_map(t_game *game, char **argv)
 
 	if (!game)
 		return (0);
-	game->level_paths = ft_calloc(game->total_levels, sizeof *game->level_paths);
+	game->level_paths = ft_calloc(game->total_levels,
+			sizeof * game->level_paths);
 	if (!game->level_paths)
 		return (0);
 	i = -1;
@@ -111,15 +112,13 @@ int	validate_map(t_game *game, char **argv)
 	{
 		if (!has_ber_extension(argv[i + 1]))
 		{
-			ft_printf("Error: map %s needs to have .ber extension\n", argv[i + 1]);
-			free_game(game);
-			return (0);
+			ft_printf("Error: map %s needs .ber extension\n", argv[i + 1]);
+			return (free_game(game), 0);
 		}
 		if (!is_map_valid(game, argv[i + 1]))
 		{
 			ft_printf("Error: invalid map %s\n", argv[i + 1]);
-			free_game(game);
-			return (0);
+			return (free_game(game), 0);
 		}
 		game->level_paths[i] = ft_strdup(argv[i + 1]);
 	}

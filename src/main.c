@@ -36,6 +36,15 @@ void	init_game(t_game *game)
 	game->move_cooldown = 0;
 }
 
+void	init_enemy(t_game *game)
+{
+	game->enemies.enemy_x = 0;
+	game->enemies.enemy_y = 0;
+	game->enemies.enemy_frame_index = 0;
+	game->enemies.enemy_frame_counter = 0;
+	game->enemies.move_cooldown = 0;
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	*game;
@@ -49,6 +58,7 @@ int	main(int argc, char **argv)
 	if (!game)
 		return (1);
 	init_game(game);
+	init_enemy(game);
 	game->total_levels = argc - 1;
 	if (!validate_map(game, argv))
 		return (1);

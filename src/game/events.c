@@ -23,32 +23,34 @@ int	key_press(int keycode, t_game *game)
 		exit(0);
 	}
 	if (keycode == 119 || keycode == 97 || keycode == 115 || keycode == 100)
+	{
 		if (move_player(game, keycode))
 		{
 			change_dir(game, keycode);
 			game->steps++;
 			ft_printf("Steps: %d\n", game->steps);
-			draw_map(game);		
+			draw_map(game);
 		}
+	}
 	return (0);
 }
 
-void handle_exit_event(t_game *game)
+void	handle_exit_event(t_game *game)
 {
-    if (game->current_level + 1 < game->total_levels)
-    {
+	if (game->current_level + 1 < game->total_levels)
+	{
 		game->steps++;
-        game->current_level++;
-        load_new_level(game);
-        draw_map(game);
-    }
-    else
-    {
+		game->current_level++;
+		load_new_level(game);
+		draw_map(game);
+	}
+	else
+	{
 		game->steps++;
-        ft_printf("Congratulations! You completed all levels.\n");
-        close_win(game);
-        exit(0);
-    }
+		ft_printf("Congratulations! You completed all levels.\n");
+		close_win(game);
+		exit(0);
+	}
 }
 
 int	close_win(t_game *game)
@@ -64,5 +66,3 @@ int	handle_exit(t_game *game)
 		handle_exit_event(game);
 	return (0);
 }
-
-

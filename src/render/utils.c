@@ -17,16 +17,16 @@ static void	load_horizontal(t_game *game, t_direction dir, int w, int h)
 	if (dir == DIR_LEFT)
 	{
 		game->textures.player[DIR_LEFT][0] = mlx_xpm_file_to_image(game->mlx,
-    		"assets/sprites/player_left_1.xpm", &w, &h);
+				"assets/sprites/player_left_1.xpm", &w, &h);
 		game->textures.player[DIR_LEFT][1] = mlx_xpm_file_to_image(game->mlx,
-    		"assets/sprites/player_left_2.xpm", &w, &h);
+				"assets/sprites/player_left_2.xpm", &w, &h);
 	}
 	if (dir == DIR_RIGHT)
 	{
 		game->textures.player[DIR_RIGHT][0] = mlx_xpm_file_to_image(game->mlx,
-    		"assets/sprites/player_right_1.xpm", &w, &h);
+				"assets/sprites/player_right_1.xpm", &w, &h);
 		game->textures.player[DIR_RIGHT][1] = mlx_xpm_file_to_image(game->mlx,
-    		"assets/sprites/player_right_2.xpm", &w, &h);
+				"assets/sprites/player_right_2.xpm", &w, &h);
 	}
 }
 
@@ -35,17 +35,37 @@ static void	load_vertical(t_game *game, t_direction dir, int w, int h)
 	if (dir == DIR_UP)
 	{
 		game->textures.player[DIR_UP][0] = mlx_xpm_file_to_image(game->mlx,
-			"assets/sprites/player_up_1.xpm", &w, &h);
+				"assets/sprites/player_up_1.xpm", &w, &h);
 		game->textures.player[DIR_UP][1] = mlx_xpm_file_to_image(game->mlx,
-			"assets/sprites/player_up_2.xpm", &w, &h);
+				"assets/sprites/player_up_2.xpm", &w, &h);
 	}
 	if (dir == DIR_DOWN)
 	{
 		game->textures.player[DIR_DOWN][0] = mlx_xpm_file_to_image(game->mlx,
-			"assets/sprites/player_down_1.xpm", &w, &h);
+				"assets/sprites/player_down_1.xpm", &w, &h);
 		game->textures.player[DIR_DOWN][1] = mlx_xpm_file_to_image(game->mlx,
-			"assets/sprites/player_down_2.xpm", &w, &h);
+				"assets/sprites/player_down_2.xpm", &w, &h);
 	}
+}
+
+static int	load_enemy(t_game *game, int w, int h)
+{
+	int	i;
+
+	game->textures.enemy[0] = mlx_xpm_file_to_image(game->mlx,
+			"assets/sprites/enemy_1.xpm", &w, &h);
+	game->textures.enemy[1] = mlx_xpm_file_to_image(game->mlx,
+			"assets/sprites/enemy_2.xpm", &w, &h);
+	i = -1;
+	while (++i < 2)
+	{
+		if (!game->textures.enemy[i])
+		{
+			free_textures(game);
+			return (0);
+		}
+	}
+	return (1);
 }
 
 static int	load_player(t_game *game, int w, int h)
@@ -62,10 +82,12 @@ static int	load_player(t_game *game, int w, int h)
 	{
 		j = -1;
 		while (++j < 2)
-		if (!game->textures.player[i][j])
 		{
-			free_textures(game);
-			return (0);
+			if (!game->textures.player[i][j])
+			{
+				free_textures(game);
+				return (0);
+			}
 		}
 	}
 	return (1);
@@ -84,10 +106,12 @@ int	load_textures(t_game *game)
 			"assets/sprites/items_1.xpm", &width, &height);
 	game->textures.exit = mlx_xpm_file_to_image(game->mlx,
 			"assets/textures/exit.xpm", &width, &height);
+	if (!load_enemy(game, width, height))
+		return (0);
 	if (!load_player(game, width, height))
 		return (0);
 	if (!game->textures.wall || !game->textures.floor
-			|| !game->textures.items || !game->textures.exit )
+		|| !game->textures.items || !game->textures.exit)
 	{
 		free_textures(game);
 		return (0);

@@ -28,6 +28,8 @@ CFILES= ./src/main.c \
 		./src/render/utils.c \
 		./src/levels/level_loader.c \
 		./src/player/movement.c \
+		./src/bonus/enemy_movement.c \
+		./src/bonus/enemy_rendering.c
 		
 # .h files
 HFILES= ./includes/game.h \

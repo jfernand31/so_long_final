@@ -33,7 +33,7 @@ void	free_textures(t_game *game)
 		}
 	}
 	if (game->textures.items)
-			mlx_destroy_image(game->mlx, game->textures.items);
+		mlx_destroy_image(game->mlx, game->textures.items);
 	if (game->textures.exit)
 		mlx_destroy_image(game->mlx, game->textures.exit);
 }
@@ -63,7 +63,8 @@ static void	free_str_array(char **arr, int count)
 
 	if (!arr)
 		return ;
-	for (i = 0; i < count; i++)
+	i = -1;
+	while (++i < count)
 	{
 		if (arr[i])
 			free(arr[i]);

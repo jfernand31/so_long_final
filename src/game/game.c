@@ -15,7 +15,7 @@
 #include "../../includes/render.h"
 
 int	run_game(t_game *game)
-{	
+{
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return (0);
@@ -28,7 +28,7 @@ int	run_game(t_game *game)
 			"So Long");
 	game->items = 0;
 	if (!is_map_valid(game, game->level_paths[game->current_level]))
-			return (0);
+		return (0);
 	center_map(game);
 	ft_printf("Loaded level %d\n", game->current_level + 1);
 	draw_map(game);
