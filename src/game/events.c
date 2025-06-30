@@ -64,6 +64,7 @@ int	handle_exit(t_game *game)
 int	game_loop(t_game *game)
 {
 	update_animation(game);
+	update_cooldown(game);
 	draw_map(game);
 	return (0);
 }

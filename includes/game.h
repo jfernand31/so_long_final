@@ -23,6 +23,7 @@
 # define WINDOW_HEIGHT 1080
 # define FRAME_DELAY 200
 # define WALK_FRAMES 2
+# define MOVE_COOLDOWN_FRAMES 40
 
 typedef enum e_direction
 {
@@ -63,6 +64,7 @@ typedef struct s_game
 	t_textures		textures;
 	int				frame_index;
 	int				frame_counter;
+	int				move_cooldown;
 }					t_game;
 
 void	handle_exit_event(t_game *game);
@@ -80,5 +82,6 @@ void 	draw_player(t_game *game, int y, int x);
 int		load_textures(t_game *game);
 void	free_textures(t_game *game);
 void	update_animation(t_game *game);
+void	update_cooldown(t_game *game);
 
 #endif

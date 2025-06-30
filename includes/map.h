@@ -16,7 +16,7 @@
 
 int		validate_map(t_game *game, char **argv);
 void	parse_grid(int fd, t_game *game);
-int		get_height(int fd);
+int		get_height(const char *path);
 int		check_outer_wall(char *line);
 int		check_borders(char *line);
 int		check_player(char *line, int y, t_game *game);

@@ -11,13 +11,18 @@
 /* ************************************************************************** */
 
 #include "../../includes/map.h"
+#include <fcntl.h>
 
-int	get_height(int fd)
+int	get_height(const char *path)
 {
 	int		height;
 	char	*line;
+	int		fd;
 
 	height = 0;
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (0);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -25,6 +30,7 @@ int	get_height(int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 	return (height);
 }
 
@@ -65,4 +71,5 @@ void	parse_grid(int fd, t_game *game)
 		free(line);
 	}
 	game->grid[i] = NULL;
+	game->height = i;
 }

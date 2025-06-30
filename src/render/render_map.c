@@ -74,15 +74,14 @@ void draw_tile(t_game *game, char tile, int x, int y)
     px = game->x_offset + x * game->tile_size;
     py = game->y_offset + y * game->tile_size;
     if (tile == '1')
+	{
         mlx_put_image_to_window(game->mlx, game->win,
             game->textures.wall, px, py);
-    else if (tile == '0')
-        mlx_put_image_to_window(game->mlx, game->win,
+		return ;
+	}
+    mlx_put_image_to_window(game->mlx, game->win,
             game->textures.floor, px, py);
-    else if (tile == 'P')
-		mlx_put_image_to_window(game->mlx, game->win,
-			game->textures.player[game->dir][game->frame_index], px, py);
-    else if (tile == 'C')
+    if (tile == 'C')
         mlx_put_image_to_window(game->mlx, game->win,
             game->textures.items, px, py);
     else if (tile == 'E')
@@ -108,6 +107,9 @@ void	draw_map(t_game *game)
 			draw_tile(game, tile, x, y);
 		}
 	}
+	draw_player(game,
+		game->y_offset + game->player_y * game->tile_size,
+		game->x_offset + game->player_x * game->tile_size);
 	snprintf(msg, sizeof(msg), "Steps: %d", game->steps);
 	mlx_string_put(game->mlx, game->win, 10, 10, 0xFFFFFF, msg);
 }

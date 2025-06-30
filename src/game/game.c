@@ -26,6 +26,8 @@ int	move_player(t_game *game, int keycode)
 	int	p_y;
 	int	p_x;
 
+	if (game->move_cooldown > 0)
+        return 0;  // still cooling down, ignore move
 	p_y = game->player_y;
 	p_x = game->player_x;
 	if (keycode == 119)
@@ -44,6 +46,7 @@ int	move_player(t_game *game, int keycode)
 		if (!handle_exit(game))
 				return (0);
 	update_tile(game, p_y, p_x);
+	game->move_cooldown = MOVE_COOLDOWN_FRAMES;
 	return (1);
 }
 
@@ -59,6 +62,7 @@ int	key_press(int keycode, t_game *game)
 		{
 			change_dir(game, keycode);
 			game->steps++;
+			ft_printf("Steps: %d\n", game->steps);
 			draw_map(game);		
 		}
 	return (0);

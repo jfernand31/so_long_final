@@ -73,7 +73,7 @@ char	**copy_grid(char **grid, int height)
 		copy[i] = ft_strdup(grid[i]);
 		if (!copy[i])
 		{
-			free_grid(copy, height);
+			free_grid(copy, i);
 			return (NULL);
 		}
 	}

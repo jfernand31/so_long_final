@@ -34,3 +34,9 @@ void	update_animation(t_game *game)
 	}
 }
 
+void update_cooldown(t_game *game)
+{
+    if (game->move_cooldown > 0)
+        game->move_cooldown--;
+}
+

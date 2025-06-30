@@ -83,26 +83,17 @@ int	is_map_valid(t_game *game, const char *path)
 	
 	if (game->grid)
 		free_grid(game->grid, game->height);
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	game->height = get_height(fd);
-	close(fd);
+	game->grid  = NULL;
+	game->height = get_height(path);
 	fd = open(path, O_RDONLY);
 	parse_grid(fd, game);
 	close(fd);
 	if (!game->grid)
 		return (0);
 	if (!check_map_format(game->grid, game))
-	{
-		free_grid(game->grid, game->height);
 		return (0);
-	}
 	if (!check_path(game->grid, game))
-	{
-		free_grid(game->grid, game->height);
 		return (0);
-	}
 	return (1);
 }
 
@@ -120,7 +111,7 @@ int	validate_map(t_game *game, char **argv)
 	{
 		if (!has_ber_extension(argv[i + 1]))
 		{
-			ft_printf("Error: map %s needs to have .ber extension\n");
+			ft_printf("Error: map %s needs to have .ber extension\n", argv[i + 1]);
 			free_game(game);
 			return (0);
 		}

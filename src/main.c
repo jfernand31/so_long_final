@@ -45,6 +45,7 @@ void	init_game(t_game *game)
 	game->y_offset = 0;
 	game->frame_counter = 0;
 	game->frame_index = 0;
+	game->move_cooldown = 0;
 }
 
 int	main(int argc, char **argv)
@@ -62,10 +63,7 @@ int	main(int argc, char **argv)
 	init_game(game);
 	game->total_levels = argc - 1;
 	if (!validate_map(game, argv))
-	{
-		free_game(game);
 		return (1);
-	}
 	run_game(game);
 	free_game(game);
 	return (0);
