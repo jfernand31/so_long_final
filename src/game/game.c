@@ -27,7 +27,7 @@ int	move_player(t_game *game, int keycode)
 	int	p_x;
 
 	if (game->move_cooldown > 0)
-        return 0;  // still cooling down, ignore move
+        return 0;
 	p_y = game->player_y;
 	p_x = game->player_x;
 	if (keycode == 119)

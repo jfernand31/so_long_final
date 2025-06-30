@@ -20,7 +20,7 @@ void	draw_player(t_game *game, int y, int x)
 
 	frame = game->frame_index;
 	sprite = game->textures.player[game->dir][frame];
-		if (!sprite)
+	if (!sprite)
 		return ;
 	mlx_put_image_to_window(game->mlx, game->win, sprite, x, y);
 }
@@ -60,7 +60,7 @@ void	free_textures(t_game *game)
 		}
 	}
 	if (game->textures.items)
-		mlx_destroy_image(game->mlx, game->textures.items);
+			mlx_destroy_image(game->mlx, game->textures.items);
 	if (game->textures.exit)
 		mlx_destroy_image(game->mlx, game->textures.exit);
 }

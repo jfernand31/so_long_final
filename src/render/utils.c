@@ -77,17 +77,16 @@ int	load_textures(t_game *game)
 	game->textures.floor = mlx_xpm_file_to_image(game->mlx,
 			"assets/textures/floor.xpm", &width, &height);
 	game->textures.items = mlx_xpm_file_to_image(game->mlx,
-			"assets/sprites/items.xpm", &width, &height);
+			"assets/sprites/items_1.xpm", &width, &height);
 	game->textures.exit = mlx_xpm_file_to_image(game->mlx,
 			"assets/textures/exit.xpm", &width, &height);
 	if (!load_player(game, width, height))
 		return (0);
 	if (!game->textures.wall || !game->textures.floor
-			|| !game->textures.items || !game->textures.exit)
+			|| !game->textures.items || !game->textures.exit )
 	{
 		free_textures(game);
 		return (0);
 	}
 	return (1);
 }
-
