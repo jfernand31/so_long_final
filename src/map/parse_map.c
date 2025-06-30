@@ -6,35 +6,25 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:12:16 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/27 11:12:45 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:56:47 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/map.h"
-#include <fcntl.h>
 
-int	get_height(const char *path)
+int	has_ber_extension(char *filename)
 {
-	int		height;
-	char	*line;
-	int		fd;
+	int	len;
 
-	height = 0;
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
+	if (!filename)
 		return (0);
-	line = get_next_line(fd);
-	while (line)
-	{
-		height++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	return (height);
+	len = ft_strlen(filename);
+	if (len < 4)
+		return (0);
+	return (ft_strncmp(filename + len - 4, ".ber", 4) == 0);
 }
 
-void	remove_newline(char *str)
+static void	remove_newline(char *str)
 {
 	int	len;
 

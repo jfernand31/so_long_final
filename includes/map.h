@@ -6,7 +6,7 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 09:31:13 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/27 09:32:30 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:48:17 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int		check_shape(char **grid, t_game *game);
 char	**copy_grid(char **grid, int height);
 int		is_map_valid(t_game *game, const char *path);
 void	change_dir(t_game *game, int keycode);
+int		has_ber_extension(char *filename);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 08:45:47 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/27 12:43:48 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:44:35 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,13 @@ typedef struct s_game
 	int				move_cooldown;
 }					t_game;
 
+int		key_press(int keycode, t_game *game);
 void	handle_exit_event(t_game *game);
-int		has_ber_extension(char *filename);
+int		close_win(t_game *game);
+int		handle_exit(t_game *game);
+int		game_loop(t_game *game);
 void	free_grid(char **grid, int height);
 void	free_game(t_game *game);
 int		run_game(t_game *game);
-int		load_textures(t_game *game);
-void	draw_map(t_game *game);
-int		close_win(t_game *game);
-void	center_map(t_game *game);
-int		handle_exit(t_game *game);
-int		game_loop(t_game *game);
-void 	draw_player(t_game *game, int y, int x);
-int		load_textures(t_game *game);
-void	free_textures(t_game *game);
-void	update_animation(t_game *game);
-void	update_cooldown(t_game *game);
 
 #endif

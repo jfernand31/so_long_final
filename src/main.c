@@ -6,24 +6,12 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 08:56:05 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/28 21:57:28 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:56:11 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/game.h"
 #include "../includes/map.h"
-
-int	has_ber_extension(char *filename)
-{
-	int	len;
-
-	if (!filename)
-		return (0);
-	len = ft_strlen(filename);
-	if (len < 4)
-		return (0);
-	return (ft_strncmp(filename + len - 4, ".ber", 4) == 0);
-}
 
 void	init_game(t_game *game)
 {

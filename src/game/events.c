@@ -6,28 +6,32 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 17:09:27 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/28 17:10:48 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:57:07 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/game.h"
-#include "../../includes/map.h"
+#include "../../includes/level_loader.h"
+#include "../../includes/player.h"
+#include "../../includes/render.h"
 
-void	load_new_level(t_game *game)
+int	key_press(int keycode, t_game *game)
 {
-	game->collected = 0;
-	game->items = 0;
-	if (!is_map_valid(game, game->level_paths[game->current_level]))
+	if (keycode == 65307)
 	{
-    	ft_printf("Error loading level %d\n", game->current_level);
-    	close_win(game);
-    	exit(1);
+		close_win(game);
+		exit(0);
 	}
-	center_map(game);
-	ft_printf("Loaded level %d\n", game->current_level + 1);
-	return ;
+	if (keycode == 119 || keycode == 97 || keycode == 115 || keycode == 100)
+		if (move_player(game, keycode))
+		{
+			change_dir(game, keycode);
+			game->steps++;
+			ft_printf("Steps: %d\n", game->steps);
+			draw_map(game);		
+		}
+	return (0);
 }
-
 
 void handle_exit_event(t_game *game)
 {
@@ -61,10 +65,4 @@ int	handle_exit(t_game *game)
 	return (0);
 }
 
-int	game_loop(t_game *game)
-{
-	update_animation(game);
-	update_cooldown(game);
-	draw_map(game);
-	return (0);
-}
+

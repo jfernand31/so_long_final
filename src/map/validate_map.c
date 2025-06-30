@@ -6,13 +6,13 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 09:38:10 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/27 12:16:10 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:56:44 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/map.h"
 
-void	flood_fill(char **grid, int x, int y)
+static void	flood_fill(char **grid, int x, int y)
 {
 	if (grid[y][x] == '1' || grid[y][x] == 'V')
 		return ;
@@ -23,7 +23,7 @@ void	flood_fill(char **grid, int x, int y)
 	flood_fill(grid, x, y - 1);
 }
 
-int	check_path(char **grid, t_game *game)
+static int	check_path(char **grid, t_game *game)
 {
 	char	**temp;
 	int		i;

@@ -6,11 +6,33 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:44:26 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/27 11:54:43 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:56:51 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/map.h"
+#include <fcntl.h>
+
+int	get_height(const char *path)
+{
+	int		height;
+	char	*line;
+	int		fd;
+
+	height = 0;
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	line = get_next_line(fd);
+	while (line)
+	{
+		height++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return (height);
+}
 
 int	ft_strlen_nobrk(const char *s)
 {

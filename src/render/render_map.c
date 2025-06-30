@@ -6,25 +6,11 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:46:07 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/27 19:50:02 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:56:21 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/game.h"
-#include <stdio.h>
-
-void	draw_player(t_game *game, int y, int x)
-{
-	int		frame;
-	void	*sprite;
-
-	frame = game->frame_index;
-	sprite = game->textures.player[game->dir][frame];
-	if (!sprite)
-		return ;
-	mlx_put_image_to_window(game->mlx, game->win, sprite, x, y);
-}
-
+#include "../../includes/render.h"
 
 void	center_map(t_game *game)
 {
@@ -38,31 +24,6 @@ void	center_map(t_game *game)
         game->x_offset = 0;
     if (game->y_offset < 0)
         game->y_offset = 0;
-}
-
-void	free_textures(t_game *game)
-{
-	int	i;
-	int	j;
-
-	if (game->textures.wall)
-		mlx_destroy_image(game->mlx, game->textures.wall);
-	if (game->textures.floor)
-		mlx_destroy_image(game->mlx, game->textures.floor);
-	i = -1;
-	while (++i < 4)
-	{
-		j = -1;
-		while (++j < 2)
-		{
-			if (game->textures.player[i][j])
-				mlx_destroy_image(game->mlx, game->textures.player[i][j]);
-		}
-	}
-	if (game->textures.items)
-			mlx_destroy_image(game->mlx, game->textures.items);
-	if (game->textures.exit)
-		mlx_destroy_image(game->mlx, game->textures.exit);
 }
 
 

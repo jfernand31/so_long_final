@@ -6,23 +6,11 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:17:53 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/29 16:19:21 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:56:19 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/map.h"
-
-void	change_dir(t_game *game, int keycode)
-{
-	if (keycode == 119)
-		game->dir = DIR_UP;
-	else if (keycode == 115)
-		game->dir = DIR_DOWN;
-	else if (keycode == 97)
-		game->dir = DIR_LEFT;
-	else if (keycode == 100)
-		game->dir = DIR_RIGHT;
-}
+#include "../../includes/render.h"
 
 void	update_animation(t_game *game)
 {
@@ -34,9 +22,14 @@ void	update_animation(t_game *game)
 	}
 }
 
-void update_cooldown(t_game *game)
+void	draw_player(t_game *game, int y, int x)
 {
-    if (game->move_cooldown > 0)
-        game->move_cooldown--;
-}
+	int		frame;
+	void	*sprite;
 
+	frame = game->frame_index;
+	sprite = game->textures.player[game->dir][frame];
+	if (!sprite)
+		return ;
+	mlx_put_image_to_window(game->mlx, game->win, sprite, x, y);
+}

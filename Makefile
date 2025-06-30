@@ -21,11 +21,14 @@ CFILES= ./src/main.c \
 		./src/map/map_utils.c \
 		./src/map/map_more_utils.c \
 		./src/game/game.c \
+		./src/game/events.c \
+		./src/game/loop.c \
 		./src/render/render_map.c \
 		./src/render/render_player.c \
 		./src/render/utils.c \
-		./src/game/events.c
-
+		./src/levels/level_loader.c \
+		./src/player/movement.c \
+		
 # .h files
 HFILES= ./includes/game.h \
 		./includes/ map.h \

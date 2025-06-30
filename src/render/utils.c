@@ -6,13 +6,13 @@
 /*   By: jfernand <jfernand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 18:18:29 by jfernand          #+#    #+#             */
-/*   Updated: 2025/06/28 18:19:20 by jfernand         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:56:14 by jfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/game.h"
+#include "../../includes/render.h"
 
-void	load_animation(t_game *game, t_direction dir, int w, int h)
+static void	load_horizontal(t_game *game, t_direction dir, int w, int h)
 {
 	if (dir == DIR_LEFT)
 	{
@@ -28,6 +28,10 @@ void	load_animation(t_game *game, t_direction dir, int w, int h)
 		game->textures.player[DIR_RIGHT][1] = mlx_xpm_file_to_image(game->mlx,
     		"assets/sprites/player_right_2.xpm", &w, &h);
 	}
+}
+
+static void	load_vertical(t_game *game, t_direction dir, int w, int h)
+{
 	if (dir == DIR_UP)
 	{
 		game->textures.player[DIR_UP][0] = mlx_xpm_file_to_image(game->mlx,
@@ -44,15 +48,15 @@ void	load_animation(t_game *game, t_direction dir, int w, int h)
 	}
 }
 
-int	load_player(t_game *game, int w, int h)
+static int	load_player(t_game *game, int w, int h)
 {
 	int	i;
 	int	j;
 
-	load_animation(game, DIR_LEFT, w, h);
-	load_animation(game, DIR_DOWN, w, h);
-	load_animation(game, DIR_RIGHT, w, h);
-	load_animation(game, DIR_UP, w, h);
+	load_horizontal(game, DIR_LEFT, w, h);
+	load_vertical(game, DIR_DOWN, w, h);
+	load_horizontal(game, DIR_RIGHT, w, h);
+	load_vertical(game, DIR_UP, w, h);
 	i = -1;
 	while (++i < 4)
 	{
